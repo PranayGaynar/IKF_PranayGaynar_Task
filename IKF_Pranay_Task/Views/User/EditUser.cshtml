@@ -1,0 +1,84 @@
+﻿@model IKF_Pranay_Task.Models.User
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Edit User</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="EditUser" method="post" class="needs-validation" novalidate>
+                <input type="hidden" id="UserId" name="UserId" value="@Model.UserId" />
+
+                <div class="mb-3">
+                    <label for="Name" class="form-label">Name</label>
+                    <input type="text" id="Name" name="Name" class="form-control"
+                           value="@Model.Name" required />
+                    <div class="invalid-feedback">Please enter the user's name.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Designation" class="form-label">Designation</label>
+                    <input type="text" id="Designation" name="Designation"
+                           class="form-control" value="@Model.Designation" required />
+                    <div class="invalid-feedback">Please enter the user's designation.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="DOB" class="form-label">Date of Birth</label>
+                    <input type="date" id="DOB" name="DOB" class="form-control"
+                           value="@Model.DOB.ToString("yyyy-MM-dd")" required />
+                    <div class="invalid-feedback">Please select the user's date of birth.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Skills" class="form-label">Skills</label>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-secondary dropdown-toggle w-100"
+                                id="dropdownMenuButton" aria-expanded="false">
+                            Select Skills
+                        </button>
+                        <div id="checkboxDropdown" class="dropdown-menu w-100 p-3 shadow">
+                            @foreach (var skill in new[] { "C#", "JavaScript", "SQL", "HTML" })
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="@skill"
+                                    @(Model.Skills.Split(',').Contains(skill) ? "checked" : "") />
+                                    <label class="form-check-label">@skill</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <input type="hidden" id="Skills" name="Skills" value="@Model.Skills" />
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<a asp-action="ListUsers" asp-controller="User" class="btn btn-success btn-sm">
+    <i class="bi bi-plus-circle"></i> <strong>Back</strong>
+</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#dropdownMenuButton").click(function (event) {
+            $("#checkboxDropdown").toggle();
+            event.stopPropagation();
+        });
+
+        $("#checkboxDropdown input[type='checkbox']").change(function () {
+            let selectedSkills = [];
+            $("#checkboxDropdown input[type='checkbox']:checked").each(function () {
+                selectedSkills.push($(this).val());
+            });
+            $("#Skills").val(selectedSkills.join(", "));
+        });
+
+       
+    });
+</script>

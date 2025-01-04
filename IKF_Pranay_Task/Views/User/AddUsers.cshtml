@@ -1,0 +1,80 @@
+﻿@model IKF_Pranay_Task.Models.User
+
+<h2 class="mt-4 text-center">Add User</h2>
+
+<div class="container mt-5">
+    <form asp-action="AddUsers" method="post" class="p-4 shadow rounded bg-light">
+        <div class="mb-3">
+            <label for="Name" class="form-label fw-bold">Name</label>
+            <input type="text" id="Name" name="Name" class="form-control" placeholder="Enter your name" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="Designation" class="form-label fw-bold">Designation</label>
+            <input type="text" id="Designation" name="Designation" class="form-control" placeholder="Enter your designation" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="DOB" class="form-label fw-bold">Date of Birth</label>
+            <input type="date" id="DOB" name="DOB" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="Skills" class="form-label fw-bold">Skills</label>
+            <div class="dropdown">
+                <button type="button" class="btn btn-secondary dropdown-toggle w-100 text-start" id="dropdownMenuButton">
+                    Select Skills
+                </button>
+                <div id="checkboxDropdown" class="dropdown-menu p-3 shadow-lg" style="max-height: 200px; overflow-y: auto; width: 100%;">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="C#" id="skillCSharp" />
+                        <label class="form-check-label" for="skillCSharp">C#</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="JavaScript" id="skillJavaScript" />
+                        <label class="form-check-label" for="skillJavaScript">JavaScript</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="SQL" id="skillSQL" />
+                        <label class="form-check-label" for="skillSQL">SQL</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="HTML" id="skillHTML" />
+                        <label class="form-check-label" for="skillHTML">HTML</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="Asp.Net_Core" id="skillHTML" />
+                        <label class="form-check-label" for="skillAsp.Net_Core">Asp.Net_Core</label>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="Skills" name="Skills" />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 fw-bold">Add User</button>
+    </form>
+</div>
+
+<a asp-action="ListUsers" asp-controller="User" class="btn btn-success btn-sm">
+    <i class="bi bi-plus-circle"></i> <strong>Back</strong>
+</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#dropdownMenuButton").click(function (event) {
+            $("#checkboxDropdown").toggle();
+            event.stopPropagation();
+        });
+
+        $("#checkboxDropdown input[type='checkbox']").change(function () {
+            let selectedSkills = [];
+            $("#checkboxDropdown input[type='checkbox']:checked").each(function () {
+                selectedSkills.push($(this).val());
+            });
+            $("#Skills").val(selectedSkills.join(", "));
+        });
+
+        
+    });
+</script>
